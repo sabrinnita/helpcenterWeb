@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: Sabrina
+Build-Jdk: 10.0.2
+Implementation-Title: HelpcenterWeb
+Implementation-Version: 2.0-SNAPSHOT
+Implementation-Vendor-Id: HelpCenterWeb
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/HelpCenterWeb
+Created-By: Maven Integration for Eclipse
+

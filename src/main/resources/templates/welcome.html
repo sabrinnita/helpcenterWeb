@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Jumbo Colombia - Spring Boot Thymeleaf</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+</head>
+<body>
+
+<div class="navbar-header">
+    <img th:src="@{/images/logo.png}" width="360px" height="73px"/>
+</div>
+
+<div class="contenedor2">
+        <h2>Ayuda</h2>
+        <br>
+        <img th:src="@{/fontawesome/svgs/solid/search.svg}" width="18px" height="18px"/>
+        <input type="text" id="consulta" class= "input"/>
+        <table>
+            <th:block th:each="respuesta:${respuestas}">
+                <tr>
+                    <td>
+                        <a th:text="${respuesta.pregunta}">
+                    </td>
+                </tr>
+            </th:block>
+        </table>
+        <br>
+    <ul id = "preguntas"></ul>
+<!-- /.container -->
+</div>
+ 
+ <div class="contenedor1">
+ 	<h2>Categorías</h2>
+ 	<br>
+	<table>
+	  <tr>
+	  		<td>&nbsp;&nbsp;Compra de producto</td>
+			
+	  </tr>
+	  <tr>
+			<td>&nbsp;&nbsp;Estado del pedido y/o producto</td>
+	  </tr>
+	  <tr>
+			<td>&nbsp;&nbsp;Reembolsos y devoluciones</td>
+	  </tr>
+	  <tr>
+			<td>&nbsp;&nbsp;Puntos Cencosud</td>
+	  </tr>
+</table>
+<!-- <div class="containerTable">
+  <h2>Responsive Tables Using LI <small>Triggers on 767px</small></h2>
+  <ul class="responsive-table">
+    <li class="table-header">
+      <div class="col col-1">Job Id</div>
+      <div class="col col-2">Customer Name</div>
+      <div class="col col-3">Amount Due</div>
+      <div class="col col-4">Payment Status</div>
+    </li>
+    <li class="table-row">
+      <div class="col col-1" data-label="Job Id">42235</div>
+      <div class="col col-2" data-label="Customer Name">John Doe</div>
+      <div class="col col-3" data-label="Amount">$350</div>
+      <div class="col col-4" data-label="Payment Status">Pending</div>
+    </li>
+    <li class="table-row">
+      <div class="col col-1" data-label="Job Id">42442</div>
+      <div class="col col-2" data-label="Customer Name">Jennifer Smith</div>
+      <div class="col col-3" data-label="Amount">$220</div>
+      <div class="col col-4" data-label="Payment Status">Pending</div>
+    </li>
+    <li class="table-row">
+      <div class="col col-1" data-label="Job Id">42257</div>
+      <div class="col col-2" data-label="Customer Name">John Smith</div>
+      <div class="col col-3" data-label="Amount">$341</div>
+      <div class="col col-4" data-label="Payment Status">Pending</div>
+    </li>
+    <li class="table-row">
+      <div class="col col-1" data-label="Job Id">42311</div>
+      <div class="col col-2" data-label="Customer Name">John Carpenter</div>
+      <div class="col col-3" data-label="Amount">$115</div>
+      <div class="col col-4" data-label="Payment Status">Pending</div>
+    </li>
+  </ul>
+</div> -->
+ </div>
+ 
+
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"/>
+<script type="text/javascript" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<script type="text/javascript">
+
+
+$(document).ready(function() {  
+
+    $("#consulta").on("keyup", function() {
+
+        var text = $(this).val();
+          $.ajax({
+            type : 'POST',
+            url : 'consulta',
+            dataType: 'json',
+            data: {texto: text},
+            success: function(data){
+                //var res = $.parseJSON(data);
+                $("#preguntas").html("");
+                 if(data !='undefined' && data.length > 0){
+
+                   var result = "";
+                    var i;
+                        for (i = 0; i < data.length; i++) {
+                            var id = "r"+i;
+                            var rHtml = data[i].pregunta + generaRespuesta(id,data[i].respuesta) + utilidadInfo(id);
+                            var f = "showRespuesta('"+id+"')";
+                            result+="<li id='lpregunta' alt = '"+id+"' style='cursor: pointer;'><a onclick="+f+">"+rHtml+"</a></li>";
+                        }
+                    $("#preguntas").html((result == null || result === "")?"Sin resultados encontrados.":result);
+                 }
+                 else{
+                    $("#preguntas").html("<li>Sin resultados encontrados.</li>");
+                 }
+
+                 /*$("#lpregunta").click(function(){
+                        var id = $(this).attr("alt");
+                        console.log("id->"+id);
+                        $("div#"+id).css("display","block");
+
+                    });*/
+
+            },
+            error:function(x,y,z){
+                console.log("Error!!");
+            }
+            });
+     });
+    
+    
+});
+
+
+function showRespuesta(id){
+    $("div#"+id).css("display","block");
+}
+
+function generaRespuesta(id,respuesta){
+    return "<div id = '"+id+"' style = 'display: none;font-style: italic;'>"+respuesta+"</div>";
+}
+
+function utilidadInfo(id){
+	var utilidad = "Me fue útil esta información: ";
+	return "<div id = '"+id+"' style = 'display: none;font-style: italic;color:blue'>"+utilidad+"&nbsp;<button type='button' class='buttonEncuesta'>Si&nbsp;</button>&nbsp;<button type='button' onclick='buttonNo()' class='buttonEncuesta'>No</button></div><br>";
+}
+
+function buttonNo(){
+	window.location.href = "https://contactanos.tiendasjumbo.co:9444/pqr/reclamos/reclamos_init_form.do?method=initForm";
+}
+
+
+</script>
+<!--<script type="text/javascript" th:src="@{/js/consulta.js}"/>-->
+
+
+</body>
+</html>

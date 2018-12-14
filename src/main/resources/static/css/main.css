@@ -1,0 +1,82 @@
+html, body{
+  width: 100%;
+  margin: 10px 5px 15px 20px;
+}
+
+.contenedor1{
+  width: 40%;
+  float: left;
+}
+.contenedor2{
+  width: 40%;
+  float: right;
+}
+.contenedor3{
+  width: 10%;
+  float: right;
+}
+.contenedor4{
+  width: 10%;
+  float: left;
+}
+
+h1{
+	color:#04B431;
+}
+
+h2{
+	color:#0000FF;
+}
+
+table {
+  border-collapse: collapse;
+  border-radius: 1em;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 1em;
+  border-bottom: 2px solid grey; 
+}
+
+tr:hover {
+	background-color:#f5f5f5;
+}
+
+.css-mine {
+  margin-top: 2em;
+  clear: both;
+}
+
+body {
+  margin: 1.5em;
+}
+
+
+.buttonEncuesta {
+	background-color:#44c767;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:10px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+.buttonEncuesta:hover {
+	background-color:#5cbf2a;
+}
+
+.question{
+	font-weight: bold;
+}
+
+.input{
+	border-radius: 1em/1em;
+}
+
